@@ -1,17 +1,17 @@
 require 'gosu'
 require_relative './player.rb'
+require_relative './background.rb'
+require_relative './consts.rb'
 
 class GameWindow < Gosu::Window
-  Width = 640
-  Height = 480
-
   def initialize
-    super Width, Height
+    super Consts::WindowWidth, Consts::WindowHeight
 
     self.caption = "Bouncing Ball"
 
     @player = Player.new
-    @player.warp Width / 2, Height / 2
+    @player.go_to Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Height
+    @background = Background.new
   end
 
   def update
@@ -22,6 +22,7 @@ class GameWindow < Gosu::Window
   end
 
   def draw
+    @background.draw
     @player.draw
   end
 

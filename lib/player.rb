@@ -3,13 +3,14 @@ require_relative './z_order.rb'
 
 class Player
   MaxSpeed = 3
+  Height = 25
 
   def initialize
     @x = @y = @x_velocity = 0.0
     @image = Gosu::Image.new("media/player.bmp")
   end
 
-  def warp(x, y)
+  def go_to(x, y)
     @x, @y = x, y
   end
 
