@@ -1,3 +1,5 @@
+require_relative './z_order.rb'
+
 class Player
   def initialize
     @image = Gosu::Image.new("media/starfighter.bmp")
@@ -30,11 +32,19 @@ class Player
 
     @vel_x *= 0.95
     @vel_y *= 0.95
-
-    puts "x: #{@vel_x}, y: #{@vel_y}"
   end
 
   def draw
-    @image.draw_rot(@x, @y, 1, @angle)
+    @image.draw_rot(@x, @y, ZOrder::Player, @angle)
+  end
+
+  def score
+    @score
+  end
+
+  def collect_stars(stars)
+    if stars.reject! {|star| Gosu::distance(@x, @y, star.x, star.y) < 35 } then
+      @score += 1
+    end
   end
 end
