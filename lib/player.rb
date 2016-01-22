@@ -3,6 +3,7 @@ require_relative './z_order.rb'
 class Player
   def initialize
     @image = Gosu::Image.new("media/starfighter.bmp")
+    @beep = Gosu::Sample.new("media/beep.wav")
     @x = @y = @vel_x = @vel_y = @angle = 0.0
     @score = 0
   end
@@ -44,7 +45,11 @@ class Player
 
   def collect_stars(stars)
     if stars.reject! {|star| Gosu::distance(@x, @y, star.x, star.y) < 35 } then
-      @score += 1
+      @score += 10
+      @beep.play
+      true
+    else
+      false
     end
   end
 end
