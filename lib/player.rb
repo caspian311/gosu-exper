@@ -2,8 +2,10 @@ require 'gosu'
 require_relative './z_order.rb'
 
 class Player
+  MaxSpeed = 3
+
   def initialize
-    @x = @y = 0.0
+    @x = @y = @x_velocity = 0.0
     @image = Gosu::Image.new("media/player.bmp")
   end
 
@@ -12,11 +14,16 @@ class Player
   end
 
   def go_left
-    @x -= 1
+    @x_velocity -= 0.1 if @x_velocity > -MaxSpeed
   end
 
   def go_right
-    @x += 1
+    @x_velocity += 0.1 if @x_velocity > -MaxSpeed
+  end
+
+  def update
+    @x_velocity *= 0.96
+    @x += @x_velocity
   end
 
   def draw

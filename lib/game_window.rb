@@ -17,6 +17,8 @@ class GameWindow < Gosu::Window
   def update
     @player.go_left if turn_left
     @player.go_right if turn_right
+
+    @player.update
   end
 
   def draw
