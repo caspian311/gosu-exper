@@ -17,6 +17,7 @@ class GameWindow < Gosu::Window
   def update
     @player.go_left if left_pressed?
     @player.go_right if right_pressed?
+    @player.jump if jump_pressed?
 
     @player.update
   end
@@ -27,6 +28,10 @@ class GameWindow < Gosu::Window
   end
 
   private
+
+  def jump_pressed?
+    Gosu::button_down? Gosu::KbSpace
+  end
 
   def right_pressed?
     Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight
