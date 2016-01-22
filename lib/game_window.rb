@@ -1,53 +1,74 @@
 require 'gosu'
 require_relative './player.rb'
 require_relative './star.rb'
+require_relative './score.rb'
 require_relative './z_order.rb'
+require_relative './media.rb'
 
 class GameWindow < Gosu::Window
+  Width = 640
+  Height = 480
+  MaxNumberOfStars = 50
+
   def initialize
-    super 640, 480
+    super Width, Height
+
     self.caption = "Gosu Tutorial Game"
 
-    @background_image = Gosu::Image.new("media/space.png", :tileable => true)
+    @background_image = Media::Background
 
     @player = Player.new
-    @player.warp(320, 240)
+    @player.warp(Width / 2, Height / 2)
 
-    @star_anim = Gosu::Image::load_tiles("media/star.png", 25, 25)
+    @star_anim = Media::StarAnimation
     @stars = Array.new
 
-    @font = Gosu::Font.new(20)
+    @score = Score.new @player
   end
 
   def update
-    if Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::GpLeft then
-      @player.turn_left
-    end
-    if Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight then
-      @player.turn_right
-    end
-    if Gosu::button_down? Gosu::KbUp or Gosu::button_down? Gosu::GpButton0 then
-      @player.accelerate
-    end
+    @player.turn_left if turn_left
+    @player.turn_right if turn_right
+    @player.accelerate if forward
+
     @player.move
     @player.collect_stars @stars
 
-    if rand(100) < 4 and @stars.size < 25 then
-      @stars.push(Star.new(@star_anim))
-    end
+    @stars.push(Star.new(@star_anim)) if need_more_stars?
   end
 
   def draw
     @background_image.draw(0, 0, ZOrder::Background);
     @player.draw
     @stars.each { |star| star.draw }
-    @font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+
+    @score.draw
+  end
+
+  private
+
+  def need_more_stars?
+    rand(100) < 4 and @stars.size < MaxNumberOfStars
+  end
+
+  def forward
+    Gosu::button_down? Gosu::KbUp or Gosu::button_down? Gosu::GpButton0 
+  end
+
+  def turn_right
+    Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight
+  end
+
+  def turn_left
+    Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::GpLeft
+  end
+
+  def escape_pressed(id)
+    id == Gosu::KbEscape
   end
 
   def button_down(id)
-    if id == Gosu::KbEscape
-      close
-    end
+    close if escape_pressed id
   end
 end
 
