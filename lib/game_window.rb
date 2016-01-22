@@ -10,13 +10,13 @@ class GameWindow < Gosu::Window
     self.caption = "Bouncing Ball"
 
     @player = Player.new
-    @player.go_to Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Height
+    @player.go_to Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Size
     @background = Background.new
   end
 
   def update
-    @player.go_left if turn_left
-    @player.go_right if turn_right
+    @player.go_left if left_pressed?
+    @player.go_right if right_pressed?
 
     @player.update
   end
@@ -28,11 +28,11 @@ class GameWindow < Gosu::Window
 
   private
 
-  def turn_right
+  def right_pressed?
     Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight
   end
 
-  def turn_left
+  def left_pressed?
     Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::GpLeft
   end
 
