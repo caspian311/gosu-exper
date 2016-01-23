@@ -8,6 +8,8 @@ Just a learning space for me and my gosu experiments. All experiments will be lo
 
 ###Setup###
 
+Check-out any non-master branch and following the commands below:
+
     $ brew install sdl2
     $ bundle
     
