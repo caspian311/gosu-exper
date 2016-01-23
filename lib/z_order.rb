@@ -1,5 +1,6 @@
 module ZOrder
   Background = 1
-  Shadow = 2
-  Player = 3
+  Ground = 2
+  Shadow = 3
+  Player = 4
 end

@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative './player.rb'
 require_relative './background.rb'
+require_relative './ground.rb'
 require_relative './consts.rb'
 
 class GameWindow < Gosu::Window
@@ -11,7 +12,8 @@ class GameWindow < Gosu::Window
 
     @player = Player.new
     @player.go_to Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Size
-    @background = Background.new
+    @background = Background.new Gosu::Color.argb(0xff_2850e3)
+    @ground = Ground.new Gosu::Color::GRAY
   end
 
   def update
@@ -24,6 +26,7 @@ class GameWindow < Gosu::Window
 
   def draw
     @background.draw
+    @ground.draw
     @player.draw
   end
 
