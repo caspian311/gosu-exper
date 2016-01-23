@@ -1,10 +1,12 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    byebug (8.2.1)
     gosu (0.10.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  gosu
+  byebug
+  gosu (= 0.10.5)

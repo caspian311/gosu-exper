@@ -8,32 +8,26 @@ class Ground
 
     half_height = Consts::WindowHeight / 2
 
-    @sections = [
-      {x: 0, y: half_height},
-      {x: 100, y: half_height + 20},
-      {x: 200, y: half_height + 40},
-      {x: 300, y: half_height + 60},
-      {x: 400, y: half_height + 80},
-    ]
+    @sections = {
+      0..100 => half_height,
+      100..200 => half_height + 20,
+      200..300 => half_height + 40,
+      300..400 => half_height + 60,
+      400..500 => half_height + 80,
+      500..600 => half_height,
+      600..700 => half_height - 50,
+    }
   end
 
   def draw
-    previous_section = nil
-    @sections.each do |section|
-      if previous_section.nil?
-        previous_section = section
-        next
-      end
-
-      Gosu::draw_rect previous_section[:x], previous_section[:y], 
-          section[:x] - previous_section[:x], previous_section[:y],
+    @sections.each do |range, height|
+      Gosu::draw_rect range.begin, height, 
+          range.size, Consts::WindowHeight - height,
           @color, ZOrder::Ground
-
-      previous_section = section
     end
+  end
 
-    Gosu::draw_rect previous_section[:x], previous_section[:y], 
-        Consts::WindowWidth - previous_section[:x], previous_section[:y],
-        @color, ZOrder::Ground
+  def level_at(x)
+    @sections.detect { |range, value| range.include? x }.last
   end
 end

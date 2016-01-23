@@ -9,16 +9,16 @@ class Player
   JumpForce = 5
   MaxRight = Consts::WindowWidth - Size
 
-  def initialize
-    @x = @y = @x_velocity = @y_velocity = 0.0
+  def initialize(initial_x, initial_y, ground)
+    @x = initial_x
+    @y = initial_y
+    @ground = ground
+
     @image = Gosu::Image.new("media/player.bmp")
     @shadow_image = Gosu::Image.new("media/shadow.bmp")
-    @is_jumping = false
-  end
 
-  def go_to(x, y)
-    @x, @y = x, y + 10
-    @y_min = y + 10
+    @x_velocity = @y_velocity = 0.0
+    @is_jumping = false
   end
 
   def go_left
@@ -43,7 +43,7 @@ class Player
 
   def draw
     @image.draw @x, @y, ZOrder::Player
-    @shadow_image.draw @x, @y_min + 20, ZOrder::Shadow
+    @shadow_image.draw @x, y_min + 20, ZOrder::Shadow
   end
 
   private
@@ -59,8 +59,12 @@ class Player
     if @is_jumping
       @y_velocity += 0.1
       @y += @y_velocity
-      @is_jumping = @y <= @y_min
+      @is_jumping = @y <= y_min
     end
-    @y = @y_min if @y > @y_min
+    @y = y_min if @y > y_min
+  end
+
+  def y_min
+    @ground.level_at @x
   end
 end
