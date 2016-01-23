@@ -3,7 +3,7 @@ require_relative './z_order.rb'
 require_relative './consts.rb'
 
 class Background
-  def initialize(color = Gosu::Color::WHITE)
+  def initialize(color = Gosu::Color::GRAY)
     @color = color
   end
 

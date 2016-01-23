@@ -12,12 +12,13 @@ class Player
   def initialize
     @x = @y = @x_velocity = @y_velocity = 0.0
     @image = Gosu::Image.new("media/player.bmp")
+    @shadow_image = Gosu::Image.new("media/shadow.bmp")
     @is_jumping = false
   end
 
   def go_to(x, y)
-    @x, @y = x, y
-    @y_min = y
+    @x, @y = x, y + 10
+    @y_min = y + 10
   end
 
   def go_left
@@ -42,6 +43,7 @@ class Player
 
   def draw
     @image.draw @x, @y, ZOrder::Player
+    @shadow_image.draw @x, @y_min + 20, ZOrder::Shadow
   end
 
   private
