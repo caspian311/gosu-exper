@@ -12,7 +12,7 @@ class Player
   def initialize
     @x = @y = @x_velocity = @y_velocity = 0.0
     @image = Gosu::Image.new("media/player.bmp")
-    @jumping = false
+    @is_jumping = false
   end
 
   def go_to(x, y)
@@ -29,25 +29,36 @@ class Player
   end
 
   def jump
-    return if @jumping
-    @jumping = true
+    return if @is_jumping
+
+    @is_jumping = true
     @y_velocity = -JumpForce
   end
 
   def update
-    @x_velocity *= 0.96
-    if @jumping
-      @y_velocity += 0.1
-      @y += @y_velocity
-      @jumping = @y <= @y_min
-    end
-    @x += @x_velocity
-    @x = MaxLeft if @x < MaxLeft
-    @x = MaxRight if @x > MaxRight
-    @y = @y_min if @y > @y_min
+    update_x
+    update_y
   end
 
   def draw
     @image.draw @x, @y, ZOrder::Player
+  end
+
+  private
+
+  def update_x
+    @x_velocity *= 0.96
+    @x += @x_velocity
+    @x = MaxLeft if @x < MaxLeft
+    @x = MaxRight if @x > MaxRight
+  end
+
+  def update_y
+    if @is_jumping
+      @y_velocity += 0.1
+      @y += @y_velocity
+      @is_jumping = @y <= @y_min
+    end
+    @y = @y_min if @y > @y_min
   end
 end
