@@ -69,7 +69,11 @@ class Player
   end
 
   def can_move_to?(attempted_x)
-    attempted_x >= MaxLeft and attempted_x <= MaxRight and @y <= @ground.level_at(attempted_x)
+    attempted_x >= MaxLeft and attempted_x <= MaxRight and not_in_a_wall(attempted_x)
+  end
+
+  def not_in_a_wall(attempted_x)
+    @y <= @ground.level_at(attempted_x) and @y <= @ground.level_at(attempted_x + Size)
   end
 
   def at_ground_level?
@@ -77,6 +81,6 @@ class Player
   end
 
   def y_min
-    @ground.level_at @x
+    [@ground.level_at(@x + Size), @ground.level_at(@x)].min
   end
 end
