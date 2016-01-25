@@ -1,4 +1,5 @@
 require 'gosu'
+require 'byebug'
 require_relative './z_order.rb'
 require_relative './consts.rb'
 
@@ -18,7 +19,6 @@ class Player
     @shadow_image = Gosu::Image.new("media/shadow.bmp")
 
     @x_velocity = @y_velocity = 0.0
-    @is_jumping = false
   end
 
   def go_left
@@ -30,9 +30,8 @@ class Player
   end
 
   def jump
-    return if @is_jumping
+    return unless at_ground_level?
 
-    @is_jumping = true
     @y_velocity = -JumpForce
   end
 
@@ -50,18 +49,31 @@ class Player
 
   def update_x
     @x_velocity *= 0.96
-    @x += @x_velocity
-    @x = MaxLeft if @x < MaxLeft
-    @x = MaxRight if @x > MaxRight
+    attempted_x = @x
+    attempted_x += @x_velocity
+
+    @x = attempted_x if can_move_to? attempted_x
   end
 
   def update_y
-    if @is_jumping
-      @y_velocity += 0.1
-      @y += @y_velocity
-      @is_jumping = @y <= y_min
+    if at_ground_level? and @y_velocity >= 0
+      @y_velocity = 0
+      return
     end
+
+    @y_velocity += 0.1
+
+    @y += @y_velocity
+
     @y = y_min if @y > y_min
+  end
+
+  def can_move_to?(attempted_x)
+    attempted_x >= MaxLeft and attempted_x <= MaxRight and @y <= @ground.level_at(attempted_x)
+  end
+
+  def at_ground_level?
+    @y >= y_min
   end
 
   def y_min
