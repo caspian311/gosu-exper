@@ -7,7 +7,7 @@ class Player
   MaxSpeed = 4
   Size = 25
   MaxLeft = 0
-  JumpForce = 5
+  JumpForce = 7
   MaxRight = Consts::WindowWidth - Size
 
   def initialize(initial_x, initial_y, ground)
@@ -61,7 +61,7 @@ class Player
       return
     end
 
-    @y_velocity += 0.1
+    @y_velocity += 0.2
 
     @y += @y_velocity
 
