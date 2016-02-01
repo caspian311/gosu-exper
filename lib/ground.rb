@@ -1,6 +1,4 @@
 require 'gosu'
-require_relative './z_order.rb'
-require_relative './consts.rb'
 
 class Ground
   def initialize(color)

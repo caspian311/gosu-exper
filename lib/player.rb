@@ -1,7 +1,4 @@
 require 'gosu'
-require 'byebug'
-require_relative './z_order.rb'
-require_relative './consts.rb'
 
 class Player
   MaxSpeed = 4

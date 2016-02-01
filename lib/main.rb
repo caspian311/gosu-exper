@@ -1,5 +1,6 @@
-require_relative './game_window.rb'
-
-window = GameWindow.new
-window.show
+class Main
+  def self.start
+    GameWindow.new.show
+  end
+end
 

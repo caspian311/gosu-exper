@@ -1,6 +1,4 @@
 require 'gosu'
-require_relative './consts.rb'
-require_relative './z_order.rb'
 
 class Background
   def initialize(primary_color, secondary_color = Gosu::Color::BLACK)

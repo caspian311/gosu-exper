@@ -1,8 +1,4 @@
 require 'gosu'
-require_relative './player.rb'
-require_relative './background.rb'
-require_relative './ground.rb'
-require_relative './consts.rb'
 
 class GameWindow < Gosu::Window
   def initialize
