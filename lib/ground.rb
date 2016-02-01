@@ -14,8 +14,8 @@ class Ground
       200..300 => half_height + 40,
       300..400 => half_height + 60,
       400..500 => half_height + 80,
-      500..600 => half_height,
-      600..700 => half_height - 50,
+      500..600 => half_height - 40,
+      600..700 => half_height - 80,
     }
   end
 
