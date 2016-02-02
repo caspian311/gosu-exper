@@ -9,26 +9,34 @@ class GameWindow < Gosu::Window
     @background = Background.new Gosu::Color.argb(0xff_2850e3)
     @ground = Ground.new Gosu::Color::GRAY
     @player = Player.new Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Size, @ground
+    @shots = Shots.new @player
   end
 
   def update
     @player.go_left if left_pressed?
     @player.go_right if right_pressed?
     @player.jump if jump_pressed?
+    @shots.shoot if shoot_pressed?
 
     @player.update
+    @shots.update
   end
 
   def draw
     @background.draw
     @ground.draw
     @player.draw
+    @shots.draw
   end
 
   private
 
   def jump_pressed?
     Gosu::button_down? Gosu::KbSpace
+  end
+
+  def shoot_pressed?
+    Gosu::button_down? Gosu::KbRightShift or Gosu::button_down? Gosu::KbLeftShift
   end
 
   def right_pressed?

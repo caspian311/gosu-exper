@@ -18,6 +18,11 @@ class Player
     @x_velocity = @y_velocity = 0.0
   end
 
+  def current_position
+    #@x, @y
+    nil
+  end
+
   def go_left
     @x_velocity -= 0.1 if @x_velocity > -MaxSpeed
   end
