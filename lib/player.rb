@@ -19,7 +19,7 @@ class Player
   end
 
   def current_position
-    return [@x, @y]
+    return [@x + Size / 2, @y + Size / 2]
   end
 
   def go_left

@@ -53,11 +53,22 @@ class Shot
   end
 
   def draw
-    Gosu::draw_quad x, y, Gosu::Color::RED,
-      x + ShotLength, y, Gosu::Color::BLUE,
-      x + ShotLength, y + ShotHeight, Gosu::Color::GREEN,
-      x, y + ShotHeight, Gosu::Color::YELLOW,
+    Gosu::draw_quad x, y - y_offset, Gosu::Color::RED,
+      x + ShotLength, y - y_offset, Gosu::Color::RED,
+      x + ShotLength, y, Gosu::Color::YELLOW,
+      x, y, Gosu::Color::YELLOW,
       ZOrder::Shot
+    Gosu::draw_quad x, y, Gosu::Color::YELLOW,
+      x + ShotLength, y, Gosu::Color::YELLOW,
+      x + ShotLength, y + y_offset, Gosu::Color::RED,
+      x, y + y_offset, Gosu::Color::RED,
+      ZOrder::Shot
+  end
+
+  private
+
+  def y_offset
+    ShotHeight / 2
   end
 end
 
