@@ -19,8 +19,13 @@ class Player
   end
 
   def current_position
-    #@x, @y
-    nil
+    current_x = @x
+    current_y = @y
+    Class.new do
+      define_method('x') { current_x }
+      define_method('x=') { |val| current_x = val }
+      define_method('y') { current_y }
+    end.new
   end
 
   def go_left

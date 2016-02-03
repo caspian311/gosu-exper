@@ -3,4 +3,5 @@ module ZOrder
   Ground = 2
   Shadow = 3
   Player = 4
+  Shots = 5
 end
