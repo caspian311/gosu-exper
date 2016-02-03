@@ -1,9 +1,11 @@
+require 'byebug'
+
 class Shots
   attr_reader :player
   attr_reader :shots
 
-  ShotLength = 10
-  ShotHeight = 10
+  ShotSpeed = 5
+  DistanceBeforeShootingAgain = 100
 
   def initialize(player)
     @shots = []
@@ -11,23 +13,51 @@ class Shots
   end
 
   def shoot
-    shots << player.current_position
+    return if shooting?
+
+    shots << Shot.new(player.current_position[0], player.current_position[1])
   end
 
   def update
     shots.each do |shot|
-      shot.x += 1
+      shot.x += ShotSpeed
     end
+    shots.delete_if { |shot| shot.x > Consts::WindowWidth }
   end
 
   def draw
     shots.each do |shot|
-      Gosu::draw_quad shot.x, shot.y, Gosu::Color::RED,
-        shot.x + ShotLength, shot.y, Gosu::Color::BLUE,
-        shot.x + ShotLength, shot.y + ShotHeight, Gosu::Color::GREEN,
-        shot.x, shot.y + ShotHeight, Gosu::Color::YELLOW,
-        ZOrder::Shots
+      shot.draw
     end
+  end
+
+  private 
+
+  def shooting?
+    return false if shots.empty?
+    shots.last.x < shots.last.initial_x + DistanceBeforeShootingAgain
+  end
+end
+
+class Shot
+  attr_accessor :x
+  attr_reader :y, :initial_x
+
+  ShotLength = 30
+  ShotHeight = 5
+
+  def initialize(x, y)
+    @x = x
+    @initial_x = x
+    @y = y
+  end
+
+  def draw
+    Gosu::draw_quad x, y, Gosu::Color::RED,
+      x + ShotLength, y, Gosu::Color::BLUE,
+      x + ShotLength, y + ShotHeight, Gosu::Color::GREEN,
+      x, y + ShotHeight, Gosu::Color::YELLOW,
+      ZOrder::Shot
   end
 end
 
