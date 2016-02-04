@@ -3,6 +3,7 @@ require 'gosu'
 class Player
   MaxSpeed = 4
   Size = 25
+  ShadowOffset = 20
   MaxLeft = 0
   JumpForce = 7
   MaxRight = Consts::WindowWidth - Size
@@ -43,7 +44,7 @@ class Player
 
   def draw
     @image.draw @x, @y, ZOrder::Player
-    @shadow_image.draw @x, y_min + 20, ZOrder::Shadow
+    @shadow_image.draw @x, y_min + ShadowOffset, ZOrder::Shadow
   end
 
   private
