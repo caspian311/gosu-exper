@@ -1,6 +1,8 @@
 require 'gosu'
 
 class Ground
+  attr_reader :sections
+
   def initialize(color)
     @color = color
 
@@ -18,7 +20,7 @@ class Ground
   end
 
   def draw
-    @sections.each do |range, height|
+    sections.each do |range, height|
       Gosu::draw_rect range.begin, height, 
           range.size, Consts::WindowHeight - height,
           @color, ZOrder::Ground
@@ -26,6 +28,6 @@ class Ground
   end
 
   def level_at(x)
-    @sections.detect { |range, value| range.include? x }.last
+    sections.detect { |range, value| range.include? x }.last
   end
 end
