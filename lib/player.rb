@@ -32,9 +32,7 @@ class Player
   end
 
   def jump
-    return unless at_ground_level?
-
-    @y_velocity = -JumpForce
+    @y_velocity = -JumpForce if at_ground_level?
   end
 
   def update
