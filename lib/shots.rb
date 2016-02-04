@@ -10,11 +10,14 @@ class Shots
   def initialize(player)
     @shots = []
     @player = player
+
+    @pew = Gosu::Sample.new("media/pew.wav")
   end
 
   def shoot
     return if shooting?
 
+    @pew.play
     shots << Shot.new(player.current_position[0], player.current_position[1])
   end
 
