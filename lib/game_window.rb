@@ -8,7 +8,9 @@ class GameWindow < Gosu::Window
 
     @background = Background.new Gosu::Color.argb(0xff_2850e3)
     @ground = Ground.new Gosu::Color::GRAY
-    @player = Player.new Consts::WindowWidth / 2, Consts::WindowHeight / 2 - Player::Size, @ground
+    @player = Player.new Consts::WindowWidth / 2, 
+                          0, 
+                          @ground
     @shots = Shots.new @player
   end
 
