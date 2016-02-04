@@ -13,9 +13,6 @@ class Player
     @y = initial_y
     @ground = ground
 
-    @image = Gosu::Image.new("media/player.bmp")
-    @shadow_image = Gosu::Image.new("media/shadow.bmp")
-
     @x_velocity = @y_velocity = 0.0
   end
 
@@ -41,8 +38,8 @@ class Player
   end
 
   def draw
-    @image.draw @x, @y, ZOrder::Player
-    @shadow_image.draw @x, y_min + ShadowOffset, ZOrder::Shadow
+    Media::Player.draw @x, @y, ZOrder::Player
+    Media::PlayerShadow.draw @x, y_min + ShadowOffset, ZOrder::Shadow
   end
 
   private
