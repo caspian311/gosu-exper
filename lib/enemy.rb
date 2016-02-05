@@ -15,4 +15,7 @@ class Enemy < Player
     -Size - OffscreenBuffer
   end
 
+  def play_jumping_sound
+    Media::EnemyBoink.play
+  end
 end

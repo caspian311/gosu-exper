@@ -33,7 +33,7 @@ class Player
   def jump
     if at_ground_level?
       @y_velocity = -JumpForce 
-      Media::Boink.play
+      play_jumping_sound
     end
   end
 
@@ -48,6 +48,10 @@ class Player
   end
 
   private
+
+  def play_jumping_sound
+    Media::Boink.play
+  end
 
   def draw_player_image
     Media::Player.draw @x, @y, ZOrder::Player

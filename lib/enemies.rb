@@ -1,8 +1,8 @@
 class Enemies
   attr_reader :all_the_baddies, :ground
 
-  MinimumBaddies = 5
-  SecondBetweenBaddieSpawns = 1
+  MinimumBaddies = 3
+  SecondBetweenBaddieSpawns = 2
 
   def initialize(ground)
     @all_the_baddies = []
