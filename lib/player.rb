@@ -29,7 +29,10 @@ class Player
   end
 
   def jump
-    @y_velocity = -JumpForce if at_ground_level?
+    if at_ground_level?
+      @y_velocity = -JumpForce 
+      Media::Boink.play
+    end
   end
 
   def update
