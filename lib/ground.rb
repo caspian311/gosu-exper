@@ -28,6 +28,8 @@ class Ground
   end
 
   def level_at(x)
-    sections.detect { |range, value| range.include? x }.last
+    matches = sections.detect { |range, value| range.include? x }
+    return matches.last unless matches.nil?
+    return Consts::WindowHeight
   end
 end

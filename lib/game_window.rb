@@ -11,6 +11,7 @@ class GameWindow < Gosu::Window
     @player = Player.new Consts::WindowWidth / 2, 
                           0, 
                           @ground
+    @enemies = Enemies.new @ground
     @shots = Shots.new @player
   end
 
@@ -18,6 +19,7 @@ class GameWindow < Gosu::Window
     @player.go_left if left_pressed?
     @player.go_right if right_pressed?
     @player.jump if jump_pressed?
+    @enemies.update
     @shots.shoot if shoot_pressed?
 
     @player.update
@@ -28,6 +30,7 @@ class GameWindow < Gosu::Window
     @background.draw
     @ground.draw
     @player.draw
+    @enemies.draw
     @shots.draw
   end
 

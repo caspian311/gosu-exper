@@ -1,6 +1,8 @@
 require 'gosu'
 
 class Player
+  attr_reader :x
+
   MaxSpeed = 4
   Size = 25
   ShadowOffset = 20
@@ -41,11 +43,15 @@ class Player
   end
 
   def draw
-    Media::Player.draw @x, @y, ZOrder::Player
+    draw_player_image
     Media::PlayerShadow.draw @x, y_min + ShadowOffset, ZOrder::Shadow
   end
 
   private
+
+  def draw_player_image
+    Media::Player.draw @x, @y, ZOrder::Player
+  end
 
   def update_x
     @x_velocity *= 0.96
@@ -69,7 +75,11 @@ class Player
   end
 
   def can_move_to?(attempted_x)
-    attempted_x >= MaxLeft and attempted_x <= MaxRight and not_in_a_wall(attempted_x)
+    attempted_x >= x_min and attempted_x <= MaxRight and not_in_a_wall(attempted_x)
+  end
+
+  def x_min
+    MaxLeft
   end
 
   def not_in_a_wall(attempted_x)
